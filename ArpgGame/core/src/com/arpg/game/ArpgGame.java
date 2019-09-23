@@ -27,8 +27,12 @@ public class ArpgGame extends ApplicationAdapter {
 	public void create () {
 		this.batch = new SpriteBatch();
 		this.map = new Map();
-		this.hero = new Hero(this);
-		this.monster = new Monster(this);
+		do
+			this.hero = new Hero(this);
+		while (!map.isCellPassable(hero.getPosition()));
+		do
+			this.monster = new Monster(this);
+		while(!map.isCellPassable(monster.getPosition()));
 	}
 
 	@Override

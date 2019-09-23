@@ -27,6 +27,10 @@ public class Monster {
         this.aiTimerTo = 0.0f;
     }
 
+    public Vector2 getPosition() {
+        return position;
+    }
+
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x - 40, position.y - 40);
     }
