@@ -4,12 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class Monster {
-    private ArpgGame game;
-    private Texture texture;
+    private GameScreen gameScreen;
+    private TextureRegion texture;
     private Vector2 position;
     private Vector2 direction;
     private Vector2 tmp;
@@ -17,18 +18,14 @@ public class Monster {
     private float aiTimer;
     private float aiTimerTo;
 
-    public Monster(ArpgGame game) {
-        this.game = game;
-        this.texture = new Texture("Skeleton.png");
+    public Monster(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+        this.texture = Assets.getInstance().getAtlas().findRegion("Skeleton");
         this.position = new Vector2(MathUtils.random(0, 1280), MathUtils.random(0, 720));
         this.tmp = new Vector2(0, 0);
         this.direction = new Vector2(0, 0);
         this.speed = 120.0f;
         this.aiTimerTo = 0.0f;
-    }
-
-    public Vector2 getPosition() {
-        return position;
     }
 
     public void render(SpriteBatch batch) {
@@ -44,7 +41,7 @@ public class Monster {
         }
         tmp.set(position);
         tmp.mulAdd(direction, speed * dt);
-        if (game.getMap().isCellPassable(tmp)) {
+        if (gameScreen.getMap().isCellPassable(tmp)) {
             position.set(tmp);
         }
     }
