@@ -2,28 +2,31 @@ package com.arpg.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import java.security.Key;
+
 public class Hero {
-    private ArpgGame game;
-    private Texture texture;
+    private GameScreen gameScreen;
+    private TextureRegion texture;
     private Vector2 position;
     private Vector2 tmp;
     private float speed;
 
-    public Hero(ArpgGame game) {
-        this.game = game;
-        this.texture = new Texture("Knight.png");
-        this.position = new Vector2(MathUtils.random(0, 1280), MathUtils.random(0, 720));
-        this.tmp = new Vector2(0, 0);
-        this.speed = 240.0f;
-    }
-
     public Vector2 getPosition() {
         return position;
+    }
+
+    public Hero(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+        this.texture = Assets.getInstance().getAtlas().findRegion("Knight");
+        this.position = new Vector2(0, 0);
+        this.tmp = new Vector2(0, 0);
+        this.speed = 240.0f;
     }
 
     public void render(SpriteBatch batch) {
@@ -48,8 +51,12 @@ public class Hero {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             tmp.y += speed * dt * speedMod;
         }
-        if (game.getMap().isCellPassable(tmp)) {
+        if (gameScreen.getMap().isCellPassable(tmp)) {
             position.set(tmp);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+            gameScreen.getInfoController().setup(position.x, position.y, "Hello", Color.GOLD);
         }
     }
 }
