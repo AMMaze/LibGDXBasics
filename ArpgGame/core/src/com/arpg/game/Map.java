@@ -11,8 +11,11 @@ public class Map {
         EMPTY, WALL;
     }
 
-    public static final int MAP_SIZE_X = 16;
-    public static final int MAP_SIZE_Y = 9;
+    public static final int CELL_SIZE = 80;
+    public static final int MAP_SIZE_X = 20;
+    public static final int MAP_SIZE_X_PX = MAP_SIZE_X * CELL_SIZE;
+    public static final int MAP_SIZE_Y = 10;
+    public static final int MAP_SIZE_Y_PX = MAP_SIZE_Y * CELL_SIZE;
 
     private BlockType[][] data;
     private TextureRegion textureWall;
