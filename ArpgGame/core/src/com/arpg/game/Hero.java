@@ -93,8 +93,9 @@ public class Hero extends Unit {
         if (attackTime > weapon.getAttackPeriod()) {
             attackTime = 0.0f;
             tmp.set(position).add(direction.getX() * 60, direction.getY() * 60);
-            if (gs.getMonster().getArea().contains(tmp)) {
-                gs.getMonster().takeDamage(weapon.getDamage(), Color.WHITE);
+            Unit unit = gs.getNearestMonster(position);
+            if (unit != null && unit.getArea().contains(tmp)) {
+                unit.takeDamage(weapon.getDamage(), Color.WHITE);
             }
         }
     }

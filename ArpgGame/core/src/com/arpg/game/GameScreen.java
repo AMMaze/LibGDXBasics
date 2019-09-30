@@ -10,14 +10,19 @@ import com.badlogic.gdx.math.Vector2;
 public class GameScreen extends AbstractScreen {
     private Map map;
     private Hero hero;
-    private Monster monster;
+//    private Monster monster;
+    private MonsterController monsterController;
     private InfoController infoController;
     private BitmapFont font24;
     private Vector2 mouse;
     private Vector2 tmp;
 
-    public Monster getMonster() {
-        return monster;
+    public MonsterController getMonsterController() {
+        return monsterController;
+    }
+
+    public Monster getNearestMonster(Vector2 pos) {
+        return monsterController.getNearestMonster(pos);
     }
 
     public InfoController getInfoController() {
@@ -40,7 +45,10 @@ public class GameScreen extends AbstractScreen {
     public void show() {
         this.map = new Map();
         this.hero = new Hero(this);
-        this.monster = new Monster(this);
+        this.monsterController = new MonsterController(this);
+        for (int i =0; i < 3; i++) {
+            this.monsterController.setup();
+        }
         this.font24 = Assets.getInstance().getAssetManager().get("fonts/font24.ttf");
         this.infoController = new InfoController();
         this.mouse = new Vector2(0.0f, 0.0f);
@@ -62,9 +70,10 @@ public class GameScreen extends AbstractScreen {
         if (hero.isActive()) {
             hero.render(batch);
         }
-        if (monster.isActive()) {
-            monster.render(batch);
-        }
+//        if (monster.isActive()) {
+//            monster.render(batch);
+//        }
+        monsterController.render(batch);
         infoController.render(batch, font24);
         batch.end();
     }
@@ -75,9 +84,10 @@ public class GameScreen extends AbstractScreen {
         if (hero.isActive()) {
             hero.update(dt);
         }
-        if (monster.isActive()) {
-            monster.update(dt);
-        }
+//        if (monster.isActive()) {
+//            monster.update(dt);
+//        }
+        monsterController.update(dt);
         infoController.update(dt);
     }
 

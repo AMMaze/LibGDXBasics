@@ -1,5 +1,6 @@
 package com.arpg.game;
 
+import com.arpg.game.utils.Poolable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -10,10 +11,11 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
-public class Monster extends Unit {
+public class Monster extends Unit implements Poolable {
     private TextureRegion hpTexture;
     private float aiTimer;
     private float aiTimerTo;
+
 
     public boolean isActive() {
         return hp > 0;
@@ -23,9 +25,13 @@ public class Monster extends Unit {
         super(gameScreen);
         this.hpTexture = Assets.getInstance().getAtlas().findRegion("monsterHp");
         this.texture = Assets.getInstance().getAtlas().findRegion("Skeleton");
+        setup();
+    }
+
+    public void setup() {
         do {
             this.position.set(MathUtils.random(0, Map.MAP_SIZE_X_PX), MathUtils.random(0, Map.MAP_SIZE_Y_PX));
-        } while (!gameScreen.getMap().isCellPassable(position));
+        } while (!super.gs.getMap().isCellPassable(position));
         this.area.setPosition(position);
         this.speed = 120.0f;
         this.aiTimerTo = 0.0f;
