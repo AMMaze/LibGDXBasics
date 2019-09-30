@@ -2,6 +2,7 @@ package com.arpg.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -10,17 +11,21 @@ public class Map {
         EMPTY, WALL;
     }
 
-    public static final int MAP_SIZE_X = 16;
-    public static final int MAP_SIZE_Y = 9;
+    public static final int CELL_SIZE = 80;
+    public static final int MAP_SIZE_X = 20;
+    public static final int MAP_SIZE_X_PX = MAP_SIZE_X * CELL_SIZE;
+    public static final int MAP_SIZE_Y = 10;
+    public static final int MAP_SIZE_Y_PX = MAP_SIZE_Y * CELL_SIZE;
 
     private BlockType[][] data;
-    private Texture textureWall;
-    private Texture textureGrass;
+    private TextureRegion textureWall;
+    private TextureRegion textureGrass;
 
     public Map() {
         this.data = new BlockType[MAP_SIZE_X][MAP_SIZE_Y];
-        this.textureGrass = new Texture("Grass.png");
-        this.textureWall = new Texture("Wall.png");
+
+        this.textureGrass = Assets.getInstance().getAtlas().findRegion("Grass");
+        this.textureWall = Assets.getInstance().getAtlas().findRegion("Wall");
         for (int i = 0; i < MAP_SIZE_X; i++) {
             for (int j = 0; j < MAP_SIZE_Y; j++) {
                 data[i][j] = BlockType.EMPTY;
